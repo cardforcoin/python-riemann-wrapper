@@ -35,6 +35,11 @@ def riemann_wrapper(client=bernhard.Client(),
                     log = _call_if_callable(logger)
                     if log:
                         log.exception('Failed to send Riemann event.')
+            else:
+                log = _call_if_callable(logger)
+                if log:
+                    log.info("Riemann isn't configured. Logging this event "
+                             "instead of sending it.\n{}".format(event))
 
         def riemann_decorator(f):
             @wraps(f)
